@@ -18,7 +18,10 @@ export default defineConfig({
         '**/*.jpeg',
         '**/*.png',
         '**/*.gif',
-        '**/*.webp'
+        '**/*.webp',
+        '**/*.~tmp',
+        '**/*.tmp',
+        '**/*.~*'
       ]
     }
   }

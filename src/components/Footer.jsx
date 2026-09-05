@@ -1,9 +1,9 @@
 import React from 'react';
-import { ArrowUp, Camera, Heart } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { InstagramIcon, LinkedinIcon, GithubIcon } from './SocialIcons';
 import { personalInfo } from '../data/portfolioData';
 
-export default function Footer({ playShutterSound }) {
+export default function Footer({ playShutterSound, theme = 'cosmic' }) {
   const scrollToTop = () => {
     playShutterSound();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -52,16 +52,15 @@ export default function Footer({ playShutterSound }) {
 
       <div className="footer-bottom-bar">
         <span>© {new Date().getFullYear()} Satyendra Kumar. All rights reserved.</span>
-        <span className="footer-craft">
-          Crafted with <Camera size={13} className="inline-icon" /> precision & code discipline.
-        </span>
       </div>
 
-      <div className="footer-event-horizon-hint" aria-hidden="true">
-        <span className="hint-pulse-orb" />
-        <span className="hint-text">SCROLL DEEPER TO ENTER EVENT HORIZON</span>
-        <span className="hint-arrow">⌄</span>
-      </div>
+      {theme === 'cosmic' && (
+        <div className="footer-event-horizon-hint" aria-hidden="true">
+          <span className="hint-pulse-orb" />
+          <span className="hint-text">SCROLL DEEPER TO ENTER EVENT HORIZON</span>
+          <span className="hint-arrow">⌄</span>
+        </div>
+      )}
     </footer>
   );
 }

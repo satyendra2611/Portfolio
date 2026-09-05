@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Volume2, VolumeX, Sparkles } from 'lucide-react';
+import { Menu, X, Volume2, VolumeX, Sparkles, Camera, Headphones, Cat } from 'lucide-react';
 
-export default function Navbar({ soundEnabled, setSoundEnabled, playShutterSound }) {
+export default function Navbar({ soundEnabled, setSoundEnabled, playShutterSound, theme, toggleTheme }) {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -89,6 +89,56 @@ export default function Navbar({ soundEnabled, setSoundEnabled, playShutterSound
         </nav>
 
         <div className="header-actions">
+          {/* Theme Switcher Toggle */}
+          <button
+            className={`theme-toggle-btn ${
+              theme === 'cat-realm'
+                ? 'active-cat'
+                : theme === 'hifi-studio'
+                ? 'active-hifi'
+                : theme === 'camera-red'
+                ? 'active-camera'
+                : 'active-cosmic'
+            }`}
+            onClick={() => {
+              playShutterSound();
+              toggleTheme();
+            }}
+            title={
+              theme === 'cosmic'
+                ? 'Switch to Camera Red Theme'
+                : theme === 'camera-red'
+                ? 'Switch to Hi-Fi Studio Theme'
+                : theme === 'hifi-studio'
+                ? 'Switch to Cat Realm Theme'
+                : 'Switch to Cosmic Theme'
+            }
+            aria-label="Toggle Portfolio Theme"
+          >
+            {theme === 'cat-realm' ? (
+              <>
+                <Cat size={15} className="theme-toggle-icon cat-icon" />
+                <span className="theme-toggle-text">Neko Realm</span>
+              </>
+            ) : theme === 'hifi-studio' ? (
+              <>
+                <Headphones size={15} className="theme-toggle-icon hifi-icon" />
+                <span className="theme-toggle-text">Hi-Fi Studio</span>
+              </>
+            ) : theme === 'camera-red' ? (
+              <>
+                <Camera size={15} className="theme-toggle-icon red-icon" />
+                <span className="theme-toggle-text">Camera Red</span>
+              </>
+            ) : (
+              <>
+                <Sparkles size={15} className="theme-toggle-icon cyan-icon" />
+                <span className="theme-toggle-text">Cosmic</span>
+              </>
+            )}
+          </button>
+
+          {/* Sound FX Toggle */}
           <button
             className="sound-toggle-btn"
             onClick={() => {
@@ -96,8 +146,8 @@ export default function Navbar({ soundEnabled, setSoundEnabled, playShutterSound
               setSoundEnabled(next);
               if (next) playShutterSound();
             }}
-            title={soundEnabled ? 'Disable camera sound' : 'Enable camera sound'}
-            aria-label="Toggle camera shutter sound effects"
+            title={soundEnabled ? 'Disable sound FX' : 'Enable sound FX'}
+            aria-label="Toggle sound effects"
           >
             {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
             <span className="sound-toggle-text">{soundEnabled ? 'FX On' : 'FX Off'}</span>
@@ -127,6 +177,46 @@ export default function Navbar({ soundEnabled, setSoundEnabled, playShutterSound
                 {link.label}
               </a>
             ))}
+
+            <div className="mobile-drawer-actions">
+              <button
+                className={`theme-toggle-btn mobile ${
+                  theme === 'cat-realm'
+                    ? 'active-cat'
+                    : theme === 'hifi-studio'
+                    ? 'active-hifi'
+                    : theme === 'camera-red'
+                    ? 'active-camera'
+                    : 'active-cosmic'
+                }`}
+                onClick={() => {
+                  playShutterSound();
+                  toggleTheme();
+                }}
+              >
+                {theme === 'cat-realm' ? (
+                  <>
+                    <Cat size={15} className="theme-toggle-icon cat-icon" />
+                    <span>Neko Realm</span>
+                  </>
+                ) : theme === 'hifi-studio' ? (
+                  <>
+                    <Headphones size={15} className="theme-toggle-icon hifi-icon" />
+                    <span>Hi-Fi Studio Theme</span>
+                  </>
+                ) : theme === 'camera-red' ? (
+                  <>
+                    <Camera size={15} className="theme-toggle-icon red-icon" />
+                    <span>Camera Red Theme</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={15} className="theme-toggle-icon cyan-icon" />
+                    <span>Cosmic Theme</span>
+                  </>
+                )}
+              </button>
+            </div>
           </nav>
         </div>
       )}

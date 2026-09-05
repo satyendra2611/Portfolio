@@ -3,7 +3,7 @@ import { RotateCcw, Sparkles } from 'lucide-react';
 
 const COLLAPSE_ZONE_HEIGHT = 1200; // px of scroll space beyond the footer to collapse everything
 
-export default function SingularityDOMCollapse({ playShutterSound }) {
+export default function SingularityDOMCollapse({ playShutterSound, theme = 'cosmic' }) {
   const [collapseProgress, setCollapseProgress] = useState(0);
   const [isFullySwallowed, setIsFullySwallowed] = useState(false);
   const targetProgressRef = useRef(0);
@@ -14,6 +14,26 @@ export default function SingularityDOMCollapse({ playShutterSound }) {
   useEffect(() => {
     const universeEl = document.getElementById('collapsible-universe');
     if (!universeEl) return;
+
+    // If in camera theme, ensure all elements are 100% normal and bail out
+    if (theme !== 'cosmic') {
+      window.__domCollapseProgress = 0;
+      universeEl.style.transform = '';
+      universeEl.style.pointerEvents = '';
+      document.body.removeAttribute('data-collapsing');
+      document.body.style.removeProperty('--dom-collapse');
+      const blocks = blocksRef.current;
+      for (let i = 0; i < blocks.length; i++) {
+        const { el } = blocks[i];
+        if (el) {
+          el.style.transform = '';
+          el.style.opacity = '';
+          el.style.filter = '';
+          el.style.zIndex = '';
+        }
+      }
+      return;
+    }
 
     // Collect all visible blocks, cards, headings, and text elements
     const collectBlocks = () => {
@@ -222,7 +242,7 @@ export default function SingularityDOMCollapse({ playShutterSound }) {
       document.body.removeAttribute('data-collapsing');
       document.body.style.removeProperty('--dom-collapse');
     };
-  }, []);
+  }, [theme]);
 
   const handleRestoreUniverse = () => {
     if (playShutterSound) playShutterSound();
@@ -235,6 +255,8 @@ export default function SingularityDOMCollapse({ playShutterSound }) {
       behavior: 'smooth'
     });
   };
+
+  if (theme !== 'cosmic') return null;
 
   return (
     <>

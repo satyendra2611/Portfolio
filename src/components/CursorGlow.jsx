@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function CursorGlow() {
+export default function CursorGlow({ theme }) {
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [visible, setVisible] = useState(false);
 
@@ -25,7 +25,15 @@ export default function CursorGlow() {
 
   return (
     <div
-      className="cursor-glow"
+      className={`cursor-glow ${
+        theme === 'cat-realm'
+          ? 'cursor-glow-cat'
+          : theme === 'camera-red'
+          ? 'cursor-glow-red'
+          : theme === 'hifi-studio'
+          ? 'cursor-glow-hifi'
+          : ''
+      }`}
       style={{
         transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`
       }}
